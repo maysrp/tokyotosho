@@ -33,7 +33,7 @@ crontab -e
 ```
 
 ```
-curl */1 * * * * http://yourdomain/index.php
+curl */1 * * * * http://yourdomain/collection.php
 
 ```
 
