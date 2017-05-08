@@ -50,6 +50,19 @@
 			$this->count_insert();
 			return $this->tokyo->count('count',$where);
 		}
+		public function search($name,$start=0,$num){
+			$num=(int)$num;
+			$start=(int)$start;
+			$name=trim($name);
+			$where['name[~]']=$name;
+			$where['LIMIT']=array($start,$num);
+			$info=$this->tokyo->select('tokyo','*',$where);
+			$this->json($info);
+		}
+		public function json($info){
+			header('Content-type:text/json');
+			echo json_encode($info);
+		}
 
 
 
