@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tokyotosho搜索</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<style>
+		.col-xs-12 {
+			margin-bottom:5px; 
+		}
+
+	</style>
+</head>
+<body class="container-fluid">
+	<div class="container">
+		<div class="row text-center">
+			<h1>东京图书馆查询</h1>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 col-xs-12">
+				<div class="input-group">
+					<div class="input-group-btn">
+						<select class="btn btn-info" id="num">
+							<option value="100">显示结果</option>
+							<option value="10">10条</option>
+							<option value="100">100条</option>
+							<option value="1000">1000条</option>
+							<option value="10000">10000条</option>
+						</select>
+					</div>
+					<input type="search" name="search" id="search" class="form-control">	
+					<div class="input-group-btn ">
+						<button class="btn btn-primary" id="search-btn">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row content" id="content">
+			
+		</div>
+		<div class="row footer hide">
+			<p >
+				Powered by <a href="https://github.com/maysrp/tokyotosho">Maysrp</a>
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#search-btn").click(function(){
+			var search=$("#search").val();
+			var num=$("#num").val();
+			if(search){
+				$.ajax({
+					url:'search.php?name='+search+'&num='+num,
+					success:function(data){
+						$("#content").html("");
+						insert(data);
+						$(".footer").removeClass('hide')
+					},
+					beforeSend:function(){
+						$("#content").html("");
+						$("#content").html("<img src=\"loading.gif\" class=\"center-block\">");
+						$(".footer").addClass('hide')
+					}
+
+				})
+			}
+		})
+		function insert(data){
+			var table=$("<table class=\"table table-bordered\"></table>");
+			var trh=$("<tr></tr>");
+			var th_1=$("<th>文件名</th>");
+			var th_3=$("<th>种子下载<small class=\"text-muted\">[可能失效]</small></th>");
+			var th_2=$("<th>磁力链接</th>");
+			th_1.appendTo(trh);
+			th_2.appendTo(trh);
+			th_3.appendTo(trh);
+			trh.appendTo(table);
+			for (x in data){
+				var tr=$("<tr></tr>");
+				var td_1=$("<td width=\"70%\">"+data[x].name+"</td>");
+				var td_2=$("<td width=\"15%\"><a href=\""+data[x].magnet+"\" class=\"text-success\"><span class=\"glyphicon glyphicon-magnet\"></span></a></td>");
+				var td_3=$("<td width=\"15%\"><a href=\""+data[x].torrent+"\" class=\"text-muted\" ><span class=\"glyphicon glyphicon-arrow-down\"></span></a></td>");
+				td_1.appendTo(tr);
+				td_2.appendTo(tr);
+				td_3.appendTo(tr);
+				tr.appendTo(table);
+			}
+			table.appendTo("#content");
+		}
+
+	</script>
+
+
+
+</body>
+</html>
