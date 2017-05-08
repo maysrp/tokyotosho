@@ -93,6 +93,11 @@
 			}
 			table.appendTo("#content");
 		}
+		$(document).keypress(function(e) {  
+			if(e.which == 13) {  
+				$("#input_btn").click();  
+			}  
+		});
 
 	</script>
 
