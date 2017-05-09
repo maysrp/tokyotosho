@@ -8,11 +8,12 @@
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
 	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+	<script src="https://cdn.bootcss.com/clipboard.js/1.6.1/clipboard.min.js"></script>
 	<style>
 		.col-xs-12 {
 			margin-bottom:5px; 
 		}
-
 	</style>
 </head>
 <body class="container-fluid">
@@ -46,10 +47,22 @@
 		</div>
 		<div class="row footer hide">
 			<p >
-				Powered by <a href="https://github.com/maysrp/tokyotosho">Maysrp</a>
+				Powered by <a href="http://blog.goagent.net">Maysrp</a>
 			</p>
 		</div>
 	</div>
+
+	<div class="modal fade" id="qrcode_div">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="qrcode"></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
 	<script type="text/javascript">
 		$("#search-btn").click(function(){
 			var search=$("#search").val();
@@ -86,8 +99,8 @@
 			trh.appendTo(table);
 			for (x in data){
 				var tr=$("<tr></tr>");
-				var td_1=$("<td width=\"90%\">"+data[x].name+"</td>");
-				var td_2=$("<td width=\"10%\" class=\"text-center\"><a href=\""+data[x].magnet+"\" class=\"text-success\"><span class=\"glyphicon glyphicon-magnet\"></span></a> | <a href=\""+data[x].torrent+"\" class=\"text-danger\" ><span class=\"glyphicon glyphicon-link\"></span></a></td>");
+				var td_1=$("<td width=\"80%\">"+data[x].name+"</td>");
+				var td_2=$("<td width=\"20%\" class=\"text-center\"><a title=\"磁力链接\" href=\""+data[x].magnet+"\" class=\"text-success\"><span class=\"glyphicon glyphicon-magnet\"></span></a> | <a title=\"点击下载\" href=\""+data[x].torrent+"\" class=\"text-danger\" ><span class=\"glyphicon glyphicon-link\"></span></a> | <span title=\"生成二维码\" class=\"glyphicon glyphicon-qrcode\" onclick=\"qr_image('"+data[x].magnet+"')\"></span> | <span class=\"glyphicon glyphicon-export text-info copy\" title=\"复制磁力链接\" data-clipboard-text='"+data[x].magnet+"'></span> </td>");
 				var td_3=$("<td width=\"15%\"><a href=\""+data[x].torrent+"\" class=\"text-muted\" ><span class=\"glyphicon glyphicon-arrow-down\"></span></a></td>");
 				td_1.appendTo(tr);
 				td_2.appendTo(tr);
@@ -121,6 +134,17 @@ function keyLight(id, key, bgColor){
 
   oDiv.innerHTML = sText;
 }
+
+function qr_image(url){
+	var url_a=url.split("&");
+	url_a_1=url_a[0];
+	$('#qrcode').html(""); 
+	$('#qrcode').qrcode(url_a_1); 
+	$('#qrcode_div').modal('show');
+
+}
+	var clipboard = new Clipboard('.copy');
+
 	</script>
 
 
