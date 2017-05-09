@@ -76,29 +76,28 @@
 			var trh=$("<tr></tr>");
 			var th_1=$("<th>文件名</th>");
 			var th_3=$("<th>种子下载<small class=\"text-muted\">[可能失效]</small></th>");
-			var th_2=$("<th>磁力链接</th>");
+			var th_2=$("<th class=\"text-center\">链接</th>");
 			th_1.appendTo(trh);
 			th_2.appendTo(trh);
-			th_3.appendTo(trh);
+			//th_3.appendTo(trh);
 			trh.appendTo(table);
 			for (x in data){
 				var tr=$("<tr></tr>");
-				var td_1=$("<td width=\"70%\">"+data[x].name+"</td>");
-				var td_2=$("<td width=\"15%\"><a href=\""+data[x].magnet+"\" class=\"text-success\"><span class=\"glyphicon glyphicon-magnet\"></span></a></td>");
+				var td_1=$("<td width=\"90%\">"+data[x].name+"</td>");
+				var td_2=$("<td width=\"10%\" class=\"text-center\"><a href=\""+data[x].magnet+"\" class=\"text-success\"><span class=\"glyphicon glyphicon-magnet\"></span></a> | <a href=\""+data[x].torrent+"\" class=\"text-danger\" ><span class=\"glyphicon glyphicon-link\"></span></a></td>");
 				var td_3=$("<td width=\"15%\"><a href=\""+data[x].torrent+"\" class=\"text-muted\" ><span class=\"glyphicon glyphicon-arrow-down\"></span></a></td>");
 				td_1.appendTo(tr);
 				td_2.appendTo(tr);
-				td_3.appendTo(tr);
+				//td_3.appendTo(tr);
 				tr.appendTo(table);
 			}
 			table.appendTo("#content");
 		}
 		$(document).keypress(function(e) {  
 			if(e.which == 13) {  
-				$("#input_btn").click();  
+				$("#search-btn").click();  
 			}  
 		});
-
 	</script>
 
 
